@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - LoveLire{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<header class="custom-header">
+    <div class="logo-title">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo LoveLire" class="logo">
+        <div class="title-text">
+            LoveLire
+            <span class="slogan">votre bibliothèque en ligne</span>
+        </div>
+    </div>
+
+    <a href="{{ path('app_login') }}" class="btn-login">Se connecter</a>
+    
+</header>
+
+<div class="content-box">
+
+    <div id="commentCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            {% for comment in comments %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="d-flex flex-column flex-md-row align-items-center text-center p-4">
+                    <div class="book-info mb-3 mb-md-0 me-md-4">
+                        <img src="{{ asset('/' ~ comment.bookCover) }}" alt="Couverture {{ comment.bookTitle }}"
+                            class="img-fluid" style="max-height: 200px;">
+                        <div class="book-title fw-bold mt-2">{{ comment.bookTitle }}</div>
+                    </div>
+
+                    <div class="comment-info text-md-start">
+                        <div class="author fw-semibold">{{ comment.author }}</div>
+                        <div class="comment-text fst-italic">« {{ comment.text }} »</div>
+                        <div class="stars text-warning fs-5 mt-2">
+                            {% for i in 1..5 %}
+                            {% if i <= comment.rating %} ★ {% else %} ☆ {% endif %} {% endfor %} </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %} 
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#commentCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#commentCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endblock %}

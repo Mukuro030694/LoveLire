@@ -1,0 +1,9 @@
+doctrine_mongodb:
+    connections:
+        default:
+            server: '%env(resolve:MONGODB_URL)%'
+            options: {}
+    default_database: mongoLL
+    document_managers:
+        default:
+            auto_mapping: true
