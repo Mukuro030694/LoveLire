@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalBookIdInput = document.getElementById('modalBookId');
     const bsModal = modal ? new bootstrap.Modal(modal) : null;
 
-    // 🔐 LOGIN
+    // login
     if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -121,8 +121,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // cover preview
+    const coverPreview = document.getElementById('addCoverPreview');
+    const coverInput = document.getElementById('book-cover');
 
-    // 📥 MODIFICATION
+    if (coverPreview && coverInput) {
+
+        coverPreview.addEventListener('click', () => {
+            coverInput.click();
+        });
+
+
+        coverInput.addEventListener('change', () => {
+            if (coverInput.files && coverInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    coverPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(coverInput.files[0]);
+            }
+        });
+    }
+
+
+    // modify book
     saveChangesBtn.addEventListener('click', () => {
         const bookId = modalBookIdInput.value;
 
@@ -153,6 +175,25 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(() => alert('Erreur réseau'));
     });
+
+    const modalCover = document.getElementById('modalCoverImage');
+    const modalInput = document.getElementById('modalCoverUpload');
+
+    if (modalCover && modalInput) {
+        modalCover.addEventListener('click', () => {
+            modalInput.click();
+        });
+
+        modalInput.addEventListener('change', () => {
+            if (modalInput.files && modalInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    modalCover.src = e.target.result;
+                };
+                reader.readAsDataURL(modalInput.files[0]);
+            }
+        });
+    }
 
 
     // card click event
@@ -203,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // delet book
+    // delete book
     if (deleteBtn) {
         deleteBtn.addEventListener('click', () => {
             const bookId = modalBookIdInput.value;
