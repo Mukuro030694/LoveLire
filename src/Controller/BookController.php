@@ -83,6 +83,7 @@ final class BookController extends AbstractController
             $book->setNote($note);
             $book->setComment($comment);
             $book->setUserId($user->getId());
+            $book->setUsername($user->getUsername());
 
             $entityManager->persist($book);
             $entityManager->flush();

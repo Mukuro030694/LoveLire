@@ -45,20 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch('/auth/register', {
+                const registerResponse = await fetch('/auth/register', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password, roles: ['ROLE_USER'] }),
                 });
 
-                if (response.ok) {
+                if (registerResponse.ok) {
                     alert('Création du compte réussie !');
-                    window.location.href = '/login';
+
+
+                    const loginResponse = await fetch('/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password }),
+                        credentials: 'include',
+                    });
+
+                    if (loginResponse.ok) {
+                        window.location.href = '/library';
+                        alert('Erreur de connexion après inscription, veuillez vous connecter manuellement.');
+                        window.location.href = '/login_page';
+                    }
                 } else {
-                    const errorData = await response.json();
+                    const errorData = await registerResponse.json();
                     alert('Erreur : ' + (errorData.error || 'Erreur inconnue'));
                 }
             } catch (error) {
@@ -66,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+
 
     // library protection
     if (window.location.pathname === '/library') {

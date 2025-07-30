@@ -75,7 +75,7 @@ header.custom-header .btn-login {
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-    background-color: rgba(255, 255, 255, 0.5); 
+    background-color: rgba(197, 197, 197, 0.5); 
 }
 
 .carousel-control-prev-icon,
@@ -109,7 +109,7 @@ header.custom-header .btn-login {
 
 .carousel-item .book-info,
 .carousel-item .comment-info {
-     flex: 1 1 0;     
+    flex: 1 1 0;     
     max-width: none !important; 
     text-align: center !important;
     display: flex;
@@ -192,6 +192,7 @@ header .btn-login:active {
 .custom-header,
 .content-box {
     font-size: 1.2rem;
+    opacity: 0.8;
 }
 
 .author {

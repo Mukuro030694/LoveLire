@@ -32,32 +32,56 @@ class HomeController extends AbstractController
                 ->getResult();
         }
 
+        $bookIds = [];
+        $userIds = [];
+        foreach ($books as $book) {
+            $bookIds[] = (string) $book->getId();
+            $userIds[] = $book->getUserId();
+        }
+
+        // Debug: проверить ID книг из SQL
+        dump('Books IDs from SQL:', $bookIds);
+
         $collection = $dm->getDocumentCollection(BookCover::class);
+        $images = $collection->find(['bookId' => ['$in' => $bookIds]])->toArray();
 
-        //getting book IDs as strings
-        $bookIds = array_map(fn(Book $book) => (string) $book->getId(), $books);
-
-        $images = $collection
-            ->find(['book_id' => ['$in' => $bookIds]])
-            ->toArray();
+        // Debug: проверить, что пришло из MongoDB
+        dump('Images from Mongo:', $images);
 
         $imageMap = [];
         foreach ($images as $img) {
-            $imageMap[(string) $img['book_id']] = $img['image_url'];
+            // Debug: проверить каждое значение bookId из Mongo
+            dump('Mongo image bookId:', (string) $img['bookId']);
+            $imageMap[(string) $img['bookId']] = $img['imageUrl'];
         }
 
-        // Prepare books with string IDs for rendering
+        // Debug: проверить userIds из книг
+        dump('User IDs from books:', $userIds);
+
+        $userRepo = $entityManager->getRepository(AppUser::class);
+        $userMap = [];
+        foreach ($userRepo->findBy(['id' => $userIds]) as $userEntity) {
+            $userMap[(string) $userEntity->getId()] = $userEntity->getUsername();
+        }
+
+        // Debug: проверить userMap
+        dump('User Map:', $userMap);
+
         $booksWithIdString = [];
         foreach ($books as $book) {
+            $id = (string) $book->getId();
+            $uid = (string) $book->getUserId();
             $booksWithIdString[] = [
                 'book' => $book,
-                'idString' => (string) $book->getId(),
+                'idString' => $id,
+                'cover' => $imageMap[$id] ?? null,
+                'username' => $userMap[$uid] ?? 'Utilisateur inconnu',
             ];
         }
 
+
         return $this->render('home.html.twig', [
             'books' => $booksWithIdString,
-            'images' => $imageMap,
         ]);
     }
 }

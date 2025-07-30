@@ -31,6 +31,10 @@ class Book
     #[ORM\Column(type: 'uuid')]
     private ?Uuid $userId = null;
 
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $username = null;
+
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -88,6 +92,17 @@ class Book
     public function setUserId(Uuid $userId): static
     {
         $this->userId = $userId;
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
         return $this;
     }
 }

@@ -68,8 +68,8 @@
                             <option value="">Tous</option>
                             <option value="lu" {% if app.request.get('status')=='lu' %}selected{% endif %}>Lu</option>
                             <option value="en_cours" {% if app.request.get('status')=='en_cours' %}selected{% endif %}>
-                                En cours</option>
-                            <option value="à_lire" {% if app.request.get('status')=='à_lire' %}selected{% endif %}>À
+                                En_cours</option>
+                            <option value="à lire" {% if app.request.get('status')=='à_lire' %}selected{% endif %}>À
                                 lire</option>
                         </select>
                     </div>
