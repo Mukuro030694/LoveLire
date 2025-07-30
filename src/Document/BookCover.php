@@ -8,8 +8,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class BookCover
 {
     #[MongoDB\Id]
-    private ?string $id = null; 
-    
+    private ?string $id = null;
+
     #[MongoDB\Field(type: "string")]
     private string $bookId;
 

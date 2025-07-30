@@ -6,7 +6,7 @@ use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-#[ORM\Entity(repositoryClass: BookRepository::class)]
+#[ORM\Entity]
 #[ORM\Table(name: "books")]
 class Book
 {
