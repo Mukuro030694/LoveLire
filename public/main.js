@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-
+    //TODO
     // library protection
     if (window.location.pathname === '/library') {
         fetch('/api/check', { credentials: 'include' })
